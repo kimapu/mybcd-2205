@@ -17,6 +17,21 @@ public class Hasher {
 		return hash(input, "SHA-256");
 	}
 	
+	/**
+	 * @param blockBytes
+	 * @return
+	 */
+	public static String sha256( byte[] blockBytes ) 
+	{
+		try {
+			byte[] hashBytes = MessageDigest.getInstance("SHA-256").digest( blockBytes );
+			return Hex.encodeHexString(hashBytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 
 	static public String sha384(String input)
 	{
@@ -43,7 +58,11 @@ public class Hasher {
 			md.update(input.getBytes());
 			
 			//add more secure value before hashing for the purpose to complicate the hashcode
-				//to be covered next week
+			
+			//1) add special chars
+			//md.update( "secretchars".getBytes() );
+			//2) add salting concept
+//			md.update( Salt.generate() );
 			
 			//digest it
 			byte[] hashBytes = md.digest();
