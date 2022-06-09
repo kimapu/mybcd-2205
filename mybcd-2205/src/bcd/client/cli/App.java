@@ -3,16 +3,42 @@ package bcd.client.cli;
 import java.util.Arrays;
 import java.util.List;
 
+import bcd.function.Block;
 import bcd.function.Hasher;
+import bcd.function.Transaction;
 
 public class App {
 
 	public static void main(String[] args) {
 	
 //		demo1();
-		tstHashing();
+//		tstHashing();
+		tstBlock();
 	}
 
+	/**
+	 * tstBlock()
+	 */
+	static void tstBlock()
+	{
+		//very-first block called genesis block
+		Block genesis = new Block("0");
+		System.out.println( genesis );
+		
+		String tranx1 = "alice|bob|rm10";
+		String tranx2 = "helen|bob|rm20";
+		
+		Transaction tranxLst = new Transaction();
+		tranxLst.add(tranx1);
+		tranxLst.add(tranx2);
+	
+		//block-1
+		Block b1 = new Block(genesis.getHeader().getCurrHash());
+		b1.setTranx(tranxLst);
+		System.out.println( b1 );
+		
+	}
+	
 	/**
 	 * tstHashing
 	 */
