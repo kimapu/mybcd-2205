@@ -11,8 +11,8 @@ public class Transaction implements Serializable {
 	 * we will comeback to generate the merkle root ie., hash of merkle tree
 	 * 	merkleRoot = hash
 	 */
-	//private String merkleRoot = "9a0885f8cd8d94a57cd76150a9c4fa8a4fed2d04c244f259041d8166cdfeca1b8c237b2c4bca57e87acb52c8fa0777da";
-	private String merkleRoot;	
+	private String merkleRoot = "9a0885f8cd8d94a57cd76150a9c4fa8a4fed2d04c244f259041d8166cdfeca1b8c237b2c4bca57e87acb52c8fa0777da";
+//	private String merkleRoot;	
 	
 	public String getMerkleRoot() {
 		return merkleRoot;
