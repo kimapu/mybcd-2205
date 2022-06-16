@@ -80,7 +80,7 @@ public class Blockchain {
 	 * persist()
 	 * - write the blockchain to the bin file
 	 */
-	public static void persist()
+	private static void persist()
 	{
 		try 
 		(

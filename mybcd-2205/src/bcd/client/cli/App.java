@@ -1,9 +1,11 @@
 package bcd.client.cli;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import bcd.function.Block;
+import bcd.function.Blockchain;
 import bcd.function.Hasher;
 import bcd.function.Transaction;
 
@@ -13,9 +15,39 @@ public class App {
 	
 //		demo1();
 //		tstHashing();
-		tstBlock();
+//		tstBlock();
+
+		tstBlockchain();
 	}
 
+	/**
+	 * tstBlockchain()
+	 */
+	static void tstBlockchain()
+	{
+		String tranx1 = "alice|bob|credit|1.0";
+		String tranx2 = "alice|bob|debit|2.0";
+		
+		if ( !(new File(Blockchain.MASTER_BINARY).exists()) ) {
+			//make master dir
+			new File("master").mkdir();
+			//create genesis block
+			Blockchain.genesis();
+		} else {
+			Transaction tranxLst = new Transaction();
+			tranxLst.add(tranx1);
+			tranxLst.add(tranx2);
+			
+			String prevHash = Blockchain.get().getLast().getHeader().getCurrHash();
+			Block b1 = new Block( prevHash );
+			b1.setTranx(tranxLst);
+			
+			Blockchain.nextBlock(b1);
+			Blockchain.distribute();
+		}
+	}
+	
+	
 	/**
 	 * tstBlock()
 	 */
