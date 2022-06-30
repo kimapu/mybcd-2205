@@ -1,13 +1,19 @@
 package bcd.client.cli;
 
 import java.io.File;
+import java.security.Key;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import bcd.crypto.Crypto;
+import bcd.crypto.Symmetric;
 import bcd.function.Block;
 import bcd.function.Blockchain;
 import bcd.function.Hasher;
+import bcd.function.MerkleTree;
 import bcd.function.Transaction;
+import bcd.keygen.PredefinedCharsSecretKey;
 
 public class App {
 
@@ -17,9 +23,69 @@ public class App {
 //		tstHashing();
 //		tstBlock();
 
-		tstBlockchain();
+//		tstBlockchain();
+//		tstMerkleTree();
+		
+		tstSymm();
+	}
+	
+	/**
+	 * tstSymm()
+	 */
+	static void tstSymm()
+	{
+		Crypto symm = new Symmetric("AES");
+		
+		Key myKey = PredefinedCharsSecretKey.create();
+		
+		//assume that a string data
+		String data = "how do u do?";
+		System.out.println( "Data: "+ data );
+		
+		try {
+		
+			String encrypted = symm.encrypt(data, myKey);
+			System.out.println( "Encrypted: "+ encrypted );
+			
+			TimeUnit.SECONDS.sleep(3);
+
+			String decrypted = symm.decrypt(encrypted, myKey);
+			System.out.println("\nDecrypted: "+ decrypted);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			System.out.println("> Process complete!");
+		}
+		
 	}
 
+	/**
+	 * tstMerkleTree()
+	 */
+	static void tstMerkleTree()
+	{
+		String[] arr = {
+			"alice|bob|credit|rm10",
+			"alice|bob|debit|rm20",
+			"alice|bob|credit|rm30",
+			"alice|bob|debit|rm4"
+		};
+		
+		MerkleTree mt = MerkleTree.getInstance( Arrays.asList(arr) );
+		mt.build();
+		
+		String root = mt.getRoot();
+		
+		System.out.println( "Root: " + root );
+		//Root: e3bedf5688986ce3a90a21b8b7716777b66478a936a2fa2e96db0561399eedcc
+
+		//any change!
+		//Root: 6087128004e7a8606c1cbf491b26ae7db31012f6873a61e81d0e980c1b011686
+
+		
+	}
+	
 	/**
 	 * tstBlockchain()
 	 */
