@@ -19,7 +19,7 @@ public class PredefinedCharsSecretKey {
 
 	public static Key create()
 	{
-		int keysize = 256;
+		int keysize = 16;
 		return new SecretKeySpec( Arrays.copyOf(SECRET_CHARS.getBytes(), keysize), SYMM_ALGORITHM );
 	}
 
