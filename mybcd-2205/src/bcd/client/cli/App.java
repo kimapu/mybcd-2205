@@ -2,22 +2,27 @@ package bcd.client.cli;
 
 import java.io.File;
 import java.security.Key;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import bcd.crypto.Asymmetric;
 import bcd.crypto.Crypto;
+import bcd.crypto.KeyPairAccess;
 import bcd.crypto.Symmetric;
 import bcd.function.Block;
 import bcd.function.Blockchain;
 import bcd.function.Hasher;
 import bcd.function.MerkleTree;
 import bcd.function.Transaction;
+import bcd.keygen.MyKeyPair;
 import bcd.keygen.PredefinedCharsSecretKey;
 
 public class App {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 	
 //		demo1();
 //		tstHashing();
@@ -26,7 +31,35 @@ public class App {
 //		tstBlockchain();
 //		tstMerkleTree();
 		
-		tstSymm();
+//		tstSymm();
+
+		tstASymm();
+	}
+	
+	/**
+	 * tstASymm()
+	 */
+	static Asymmetric asymm = new Asymmetric("RSA");
+	static void tstASymm() throws Exception
+	{
+		if( !new File("KeyPair").exists()  )
+			MyKeyPair.create();
+		else {
+			//encrypt
+//			PublicKey pubKey = KeyPairAccess.getPublicKey("KeyPair/PublicKey");
+//			
+//			String msg = "hello";
+//			String encrypted = asymm.encrypt(msg, pubKey);
+//			System.out.println( String.join("|", msg, encrypted) );
+//			
+			TimeUnit.SECONDS.sleep(3);
+			//decrypt
+			String encrypted = "dphZFqOdADzH9bKMZ1/AQwM2XAKwYlCvJdq3BvGCp7Os67vIZSEvBuXIdtHlsBrzUR5yZYKzQGVGdZm1kexrh1CS/rvIJe+fjuMaauicD52lxrEzE/tD9w/IzbFzJ2CFVAYv+Nkga5EnTYod0rcqz3xIHAv22r5K/sBVep4pLVc=";
+			PrivateKey prvKey = KeyPairAccess.getPrivateKey("KeyPair/PrivateKey");
+			String decrypted = asymm.decrypt(encrypted, prvKey);
+			System.out.println("\n> Decrypted: "+ decrypted);
+		
+		}
 	}
 	
 	/**
