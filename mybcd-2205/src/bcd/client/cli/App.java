@@ -3,7 +3,6 @@ package bcd.client.cli;
 import java.io.File;
 import java.security.Key;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +11,8 @@ import bcd.crypto.Asymmetric;
 import bcd.crypto.Crypto;
 import bcd.crypto.KeyPairAccess;
 import bcd.crypto.Symmetric;
+import bcd.ds.BasicDS;
+import bcd.ds.MySignature;
 import bcd.function.Block;
 import bcd.function.Blockchain;
 import bcd.function.Hasher;
@@ -33,8 +34,66 @@ public class App {
 		
 //		tstSymm();
 
-		tstASymm();
+//		tstASymm();
+		
+//		tstBasicDS();
+		
+		tstMySignature();
 	}
+
+	/**
+	 * tstMySignature()
+	 */
+	static void tstMySignature() throws Exception
+	{
+
+		MySignature sig = new MySignature();
+		
+		String data = "simple digital signature demo";
+		System.out.println("Data: " + data);  
+		
+		String signature = sig.sign(data);
+		System.out.println( "Signature: "+ signature );
+		
+		System.out.println("\n> Transfering...");
+		TimeUnit.SECONDS.sleep(3);
+		System.out.println("> Transfered.");
+		
+		//verify
+		System.out.println();
+		boolean isValid = sig.verify(data, signature);
+		System.out.println( (isValid)? ">> Correct!" : ">> Incorrect!" );
+		
+		System.out.println("> Done...");
+		
+	}
+	
+	
+	/**
+	 * tstBasicDS()
+	 */
+	static void tstBasicDS() throws Exception
+	{
+		BasicDS sig = new BasicDS();
+		
+		String data = "simple digital signature demo";
+		System.out.println("Data: " + data);  
+		
+		String signature = sig.encrypt( sig.hash(data) );
+		System.out.println( "Signature: "+ signature );
+		
+		System.out.println("\n> Transfering...");
+		TimeUnit.SECONDS.sleep(3);
+		System.out.println("> Transfered.");
+		
+		//verify
+		System.out.println();
+		boolean isValid = sig.verify(data, signature);
+		System.out.println( (isValid)? ">> Correct!" : ">> Incorrect!" );
+		
+		System.out.println("> Done...");
+	}
+	
 	
 	/**
 	 * tstASymm()
