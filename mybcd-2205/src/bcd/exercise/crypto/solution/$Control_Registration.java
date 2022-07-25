@@ -91,7 +91,7 @@ public class $Control_Registration {
                         PublicKey pubk = keyPair.getPublic();
                         put(pubk.getEncoded(), String.join("/", keyFileName, _FILE_PUBLICKEY));
                         PrivateKey privk = keyPair.getPrivate();
-                        put(pubk.getEncoded(), String.join("/", keyFileName, _FILE_PRIVATEKEY));
+                        put(privk.getEncoded(), String.join("/", keyFileName, _FILE_PRIVATEKEY));
                     }else{
                         System.out.println("INFO: KeyPair directory not created.");
                     }
